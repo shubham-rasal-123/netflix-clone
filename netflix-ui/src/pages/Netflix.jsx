@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import backgroundImage from "../assets/home.jpg";
 import MovieLogo from "../assets/homeTitle.webp";
+
+import { onAuthStateChanged } from "firebase/auth";
+import { firebaseAuth } from "../utils/firebase-config";
 import { FaPlay } from "react-icons/fa";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import styled from "styled-components";
@@ -21,20 +24,22 @@ export default function Netflix() {
 
   useEffect(() => {
     dispatch(getGenres());
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     if (genresLoaded) {
       dispatch(fetchMovies({ genres, type: "all" }));
     }
+    // eslint-disable-next-line
   }, [genresLoaded]);
 
-  // onAuthStateChanged(firebaseAuth, (currentUser) => {
-  //   if (!currentUser) navigate("/login");
-  // });
+  onAuthStateChanged(firebaseAuth, (currentUser) => {
+    if (!currentUser) navigate("/login");
+  });
 
   window.onscroll = () => {
-    setIsScrolled(window.scrollY === 0 ? false : true);
+    setIsScrolled(window.scrollX === 0 ? false : true);
     return () => (window.onscroll = null);
   };
 
@@ -53,8 +58,8 @@ export default function Netflix() {
           </div>
           <div className="buttons flex">
             <button
-              className="flex j-center a-center"
               onClick={() => navigate("/player")}
+              className="flex j-center a-center"
             >
               <FaPlay />
               Play
