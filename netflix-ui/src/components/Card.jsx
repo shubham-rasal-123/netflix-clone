@@ -1,27 +1,28 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import video from "../assets/video2.mp4";
 import { IoPlayCircleSharp } from "react-icons/io5";
+import { AiOutlinePlus } from "react-icons/ai";
 import { RiThumbUpFill, RiThumbDownFill } from "react-icons/ri";
+import { BiChevronDown } from "react-icons/bi";
 import { BsCheck } from "react-icons/bs";
 import axios from "axios";
 import { onAuthStateChanged } from "firebase/auth";
 import { firebaseAuth } from "../utils/firebase-config";
-import { AiOutlinePlus } from "react-icons/ai";
-import { BiChevronDown } from "react-icons/bi";
 import { useDispatch } from "react-redux";
 import { removeMovieFromLiked } from "../store";
+import video from "../assets/video.mp4";
 
-export default React.memo(function Card({ movieData, isLiked = false }) {
-  const [isHovered, setIsHovered] = useState(false);
-  const [email, setEmail] = useState(undefined);
+export default React.memo(function Card({ index, movieData, isLiked = false }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [isHovered, setIsHovered] = useState(false);
+  const [email, setEmail] = useState(undefined);
 
   onAuthStateChanged(firebaseAuth, (currentUser) => {
-    if (currentUser) setEmail(currentUser.email);
-    else navigate("/login");
+    if (currentUser) {
+      setEmail(currentUser.email);
+    } else navigate("/login");
   });
 
   const addToList = async () => {
@@ -30,8 +31,8 @@ export default React.memo(function Card({ movieData, isLiked = false }) {
         email,
         data: movieData,
       });
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -42,19 +43,21 @@ export default React.memo(function Card({ movieData, isLiked = false }) {
     >
       <img
         src={`https://image.tmdb.org/t/p/w500${movieData.image}`}
-        alt="movie"
+        alt="card"
+        onClick={() => navigate("/player")}
       />
+
       {isHovered && (
         <div className="hover">
           <div className="image-video-container">
             <img
               src={`https://image.tmdb.org/t/p/w500${movieData.image}`}
-              alt="movie"
+              alt="card"
               onClick={() => navigate("/player")}
             />
             <video
               src={video}
-              autoPlay
+              autoPlay={true}
               loop
               muted
               onClick={() => navigate("/player")}
@@ -67,14 +70,14 @@ export default React.memo(function Card({ movieData, isLiked = false }) {
             <div className="icons flex j-between">
               <div className="controls flex">
                 <IoPlayCircleSharp
-                  title="play"
+                  title="Play"
                   onClick={() => navigate("/player")}
                 />
                 <RiThumbUpFill title="Like" />
                 <RiThumbDownFill title="Dislike" />
                 {isLiked ? (
                   <BsCheck
-                    title="Remove From List"
+                    title="Remove from List"
                     onClick={() =>
                       dispatch(
                         removeMovieFromLiked({ movieId: movieData.id, email })
@@ -103,7 +106,7 @@ export default React.memo(function Card({ movieData, isLiked = false }) {
   );
 });
 
-const Container = styled.div`
+export const Container = styled.div`
   max-width: 230px;
   width: 230px;
   height: 100%;
