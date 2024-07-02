@@ -4,9 +4,9 @@ import styled from "styled-components";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 
 export default React.memo(function CardSlider({ data, title }) {
-  const [showControls, setShowControls] = useState(false);
-  const [sliderPosition, setSliderPosition] = useState(0);
   const listRef = useRef();
+  const [sliderPosition, setSliderPosition] = useState(0);
+  const [showControls, setShowControls] = useState(false);
 
   const handleDirection = (direction) => {
     let distance = listRef.current.getBoundingClientRect().x - 70;
