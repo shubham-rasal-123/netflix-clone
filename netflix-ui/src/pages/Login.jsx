@@ -7,22 +7,19 @@ import { firebaseAuth } from "../utils/firebase-config";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const [formValues, setFormValues] = useState({
-    email: "",
-    password: "",
-  });
 
-  const handleLogIn = async () => {
+  const handleLogin = async () => {
     try {
-      const { email, password } = formValues;
       await signInWithEmailAndPassword(firebaseAuth, email, password);
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error.code);
     }
   };
 
-  onAuthStateChanged(firebaseAuth, (currentUser) => {
+  onAuthStateChanged(firebaseAuth, function (currentUser) {
     if (currentUser) navigate("/");
   });
 
@@ -38,31 +35,19 @@ export default function Login() {
             </div>
             <div className="container flex column">
               <input
-                type="email"
-                placeholder="Email Address"
-                name="email"
-                value={formValues.email}
-                onChange={(e) =>
-                  setFormValues({
-                    ...formValues,
-                    [e.target.name]: e.target.value,
-                  })
-                }
+                type="text"
+                placeholder="Email"
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
               />
 
               <input
                 type="password"
                 placeholder="password"
-                name="password"
-                value={formValues.password}
-                onChange={(e) =>
-                  setFormValues({
-                    ...formValues,
-                    [e.target.name]: e.target.value,
-                  })
-                }
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
               />
-              <button onClick={handleLogIn}>Log In</button>
+              <button onClick={handleLogin}>Log In</button>
             </div>
           </div>
         </div>
