@@ -11,7 +11,7 @@ import Navbar from "../components/Navbar";
 import Slider from "../components/Slider";
 import SelectGenre from "../components/SelectGenre";
 
-export default function TVShows() {
+function TVShows() {
   const [isScrolled, setIsScrolled] = useState(false);
   const movies = useSelector((state) => state.netflix.movies);
   const genres = useSelector((state) => state.netflix.genres);
@@ -52,7 +52,7 @@ export default function TVShows() {
       <Navbar isScrolled={isScrolled} />
       <div className="data">
         <SelectGenre genres={genres} type="tv" />
-        {movies?.length ? (
+        {movies.length === 0 ? (
           <>
             {" "}
             <Slider movies={movies} />{" "}
@@ -78,3 +78,5 @@ const Container = styled.div`
     }
   }
 `;
+
+export default TVShows;

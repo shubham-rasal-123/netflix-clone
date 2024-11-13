@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
-import Card from "./Card";
 import styled from "styled-components";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
+import Card from "./Card";
 
 export default React.memo(function CardSlider({ data, title }) {
   const listRef = useRef();

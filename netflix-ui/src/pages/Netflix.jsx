@@ -1,19 +1,18 @@
 import { useEffect, useState } from "react";
+import styled from "styled-components";
 import Navbar from "../components/Navbar";
 import backgroundImage from "../assets/home.jpg";
 import MovieLogo from "../assets/homeTitle.webp";
-
 import { onAuthStateChanged } from "firebase/auth";
 import { firebaseAuth } from "../utils/firebase-config";
 import { FaPlay } from "react-icons/fa";
 import { AiOutlineInfoCircle } from "react-icons/ai";
-import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchMovies, getGenres } from "../store";
 import Slider from "../components/Slider";
 
-export default function Netflix() {
+function Netflix() {
   const [isScrolled, setIsScrolled] = useState(false);
   const movies = useSelector((state) => state.netflix.movies);
   const genres = useSelector((state) => state.netflix.genres);
@@ -125,3 +124,5 @@ const Container = styled.div`
     }
   }
 `;
+
+export default Netflix;

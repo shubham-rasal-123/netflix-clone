@@ -15,6 +15,9 @@ mongoose
   })
   .then(() => {
     console.log("DB Connection Successfull");
+  })
+  .catch((err) => {
+    console.log(err.message);
   });
 
 app.use("/api/user", userRoutes);

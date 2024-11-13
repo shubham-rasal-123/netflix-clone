@@ -23,7 +23,7 @@ export default function UserListedMovies() {
   });
 
   useEffect(
-    function () {
+    () => {
       if (email) {
         dispatch(getUsersLikedMovies(email));
       }
@@ -44,14 +44,16 @@ export default function UserListedMovies() {
       <div className="content flex column">
         <h1>My List</h1>
         <div className="grid flex">
-          {movies?.map((movie, index) => (
-            <Card
-              movieData={movie}
-              index={index}
-              key={movie.id}
-              isLiked={true}
-            />
-          ))}
+          {movies?.map((movie, index) => {
+            return (
+              <Card
+                movieData={movie}
+                index={index}
+                key={movie.id}
+                isLiked={true}
+              />
+            );
+          })}
         </div>
       </div>
     </Container>

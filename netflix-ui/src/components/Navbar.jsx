@@ -6,7 +6,7 @@ import logo from "../assets/logo.png";
 import { firebaseAuth } from "../utils/firebase-config";
 import { FaPowerOff, FaSearch } from "react-icons/fa";
 
-export default function Navbar(isScrolled) {
+export default function Navbar({ isScrolled }) {
   const [showSearch, setShowSearch] = useState(false);
   const [inputHover, setInputHover] = useState(false);
   const links = [
@@ -18,10 +18,10 @@ export default function Navbar(isScrolled) {
 
   return (
     <Container>
-      <nav className={`flex ${isScrolled ? "scrolled" : ""}`}>
+      <nav className={`${isScrolled ? "scrolled" : ""}flex`}>
         <div className="left flex a-center">
           <div className="brand flex a-center j-center">
-            <img src={logo} alt="logo" />
+            <img src={logo} alt="Logo" />
           </div>
           <ul className="links flex">
             {links.map(({ name, link }) => {
@@ -38,7 +38,9 @@ export default function Navbar(isScrolled) {
             <button
               onFocus={() => setShowSearch(true)}
               onBlur={() => {
-                if (!inputHover) setShowSearch(false);
+                if (!inputHover) {
+                  setShowSearch(false);
+                }
               }}
             >
               <FaSearch />
